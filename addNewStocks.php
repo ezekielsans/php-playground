@@ -4,15 +4,13 @@ require_once 'storeClass.php';
 $id = $_GET['id'];
 $product = $store->getSingleProduct($id);
 $userDetails = $store->getUserData();
-$store->addStock($_POST);
+$store->addStock();
 
 if (isset($userDetails)) {
 
     if ($userDetails['access'] != "administrator") {
         header("Location:login.php");
-
-    } else {header("Location:login.php");
-    }
+    } 
 
 }
 ?>

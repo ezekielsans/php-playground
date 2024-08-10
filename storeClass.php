@@ -68,7 +68,7 @@ class MyStore extends Utilities
                 header("Location: index.php");
                 $this->setUserData($user);
             } else {
-                echo "<h1>User does not exist </h1>";
+                echo "";
 
             }
             return $total;
@@ -216,8 +216,8 @@ class MyStore extends Utilities
 
         if ($total > 0) {
 
+           
             return $products;
-            
         } else {
 
             return $this->show404();

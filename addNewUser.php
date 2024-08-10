@@ -10,9 +10,6 @@ if (isset($userDetails)) {
         header("Location: login.php");
      ///   exit; // Always call exit after header redirection
     }
-} else {
-    header("Location: login.php");
-   // exit; // Always call exit after header redirection
 }
 ?>
 
@@ -22,9 +19,13 @@ if (isset($userDetails)) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add New User</title>
+    <link rel="stylesheet" href="/css/addNewUser.css">
 </head>
 <body>
-    <h1>Add New Customer/User</h1>
+    <nav class="navbar">
+    <h1 id="title">Add New Customer/User</h1>
+    <a href="index.php">return</a>
+    </nav>
     <div class="container">
 
         <div class="form-container">
