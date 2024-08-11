@@ -1,16 +1,17 @@
 <?php
-require_once('storeClass.php');
+require_once 'storeClass.php';
 
 // Initialize the storeClass
-$store ->addUser();
-$userDetails = $store->getUserData();
 
-if (isset($userDetails)) {
-    if ($userDetails['access'] != "administrator") {
-        header("Location: login.php");
-     ///   exit; // Always call exit after header redirection
-    }
+$userDetails = $store->getUserData();
+print_r($userDetails);
+
+if (!$userDetails || $userDetails['access'] != "administrator") {
+    header("Location: login.php");
+    exit; // Always call exit after header redirection
 }
+$store->addUser();
+
 ?>
 
 <!DOCTYPE html>

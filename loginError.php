@@ -8,8 +8,8 @@
     <title>Login Error</title>
 </head>
 <body>
-<h1>User does not exist </h1>
-<a href="http://login.php">Login</a>
-<a href="http://login.php">Register</a>
+<h1>Not authorized to access</h1>
+<a href="login.php">Login</a>
+<a href="login.php">Register</a>
 </body>
 </html>

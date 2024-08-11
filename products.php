@@ -1,7 +1,10 @@
 <?php 
 
 require_once('storeClass.php');
+
+//$id = $_GET['id'];
 $products = $store->getProducts();
+
 
 
 ?>
@@ -12,9 +15,15 @@ $products = $store->getProducts();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Products</title>
+    <link rel="stylesheet" href="/css/products.css">
 </head>
 <body>
+    <nav class="navbar">
+  <h1 id="title"</h1>Products Section</h1>
+    <a href="index.php">Return</a>
 
+    </nav>
+<div class="container">
 <ul>
 
 <?php 
@@ -29,6 +38,9 @@ foreach ($products as $product){?>
 
 
 </ul>
-    
+</div>
+<footer class="footer">
+    Created <?php echo date("\nY");?>
+</footer>
 </body>
 </html>

@@ -1,0 +1,72 @@
+
+.navbar{
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.5rem 1.5rem;
+}
+
+
+.navbar a{
+    font-size: 2rem;
+    text-decoration: underline wavy  greenyellow;
+  color: black;
+ 
+}
+
+.navbar a:hover{
+    text-decoration: underline wavy  yellow;
+    transition: ease-in-out 2ms;
+  color: rgb(177, 162, 162);
+ 
+}
+
+
+
+
+
+form{
+
+ 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form-container {
+  
+    padding: 20px;
+    width: 300px; /* Optional: To set a specific width for the form */
+    margin: 0 auto; /* Center the form on the page */
+    align-items: center;
+}
+
+.form-container label {
+    flex: 1; /* Label takes up equal space */
+    text-align: left; /* Aligns label text to the left */
+}
+
+
+
+.form-container input{
+
+    flex: 2; /* Input takes up more space */
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    text-align: left; /* Ensure the text inside the input is aligned left */
+}
+
+form button{
+    margin-top: 2rem;
+  
+    width: 300px;
+    padding: 0.5rem;
+    border-radius: 4px;
+
+}
+
+
+

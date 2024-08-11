@@ -1,0 +1,73 @@
+html {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+    margin: 0;
+}
+
+
+.navbar{
+
+    background-color: #333;
+    display: flex;
+    flex-direction: row;
+    padding: 1rem 1rem;
+    justify-content: space-between;
+    align-items: center;
+    gap: 3rem;
+}
+
+.navbar a{
+
+    color: aliceblue;
+    text-align: right;
+    align-items: right;
+  font-size: 1.5rem;
+}
+
+
+
+.navbar a:hover{
+    text-decoration: underline wavy  yellow;
+    transition: ease-in-out 2ms;
+  color: rgb(177, 162, 162);
+ 
+}
+
+
+
+.navbar #title{
+
+color: antiquewhite;
+
+
+}
+
+
+.container {
+    flex: 1; /* This makes the container take up the available space */
+    margin: 2rem 5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.container ul li a{
+
+font-size: 1.5rem;
+
+}
+
+
+
+.footer {
+    background-color: #333; /* Example background color */
+    color: white; /* Example text color */
+    text-align: center;
+    padding: 1rem;
+    position: relative;
+}

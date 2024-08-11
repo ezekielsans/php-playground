@@ -6,13 +6,12 @@ $id = $_GET['id'];
 
 //fetch
 $product = $store -> getSingleProduct($id);
-//check  if array 
-// if (is_array($product)){
-//     echo "<h2>yes</h2>";
-   
-// }
-// else{ echo "<h2>no</h2>"; 
-// }
+
+$stocks = $store->viewAllStocks($id);
+
+//$total_qty = $store->getTotalQty($id);
+print_r($product);
+print_r($product['ID']);
 ?>
 
 <!DOCTYPE html>
@@ -24,14 +23,23 @@ $product = $store -> getSingleProduct($id);
 </head>
 <body>
     <?php print_r($product)?>
-    <h1><?=$product['product_name'];?></h1>
-    <h2><?=$product['product_type'];?></h2>
-    <h3><?=$product['min_stocks'];?></h3>
+    <h1>Product Name: <?=$product['product_name'];?></h1>
+    <h2>Product Type: <?=$product['product_type'];?></h2>
+    <h3>Stocks: <?=$product['min_stocks'];?></h3>
+    <h4>Total: <?=$product['total'];?></h4>
+<hr>
 
+<?php foreach($stocks as $stock){?>
+
+<p><?=$stock['vendor'];?>  <strong>,</strong>   <?=$stock['qty'];?></p> </p>
+
+
+
+<?php }?>
 
 
     <a href="products.php">Products</a> 
-    <a href="addNewStocks?id=<?=$product['ID']?>.php">Add new stocks</a>
+    <a href="addNewStocks.php?id=<?=$product['ID'];?>">Add new stocks</a>
     
 </body>
 </html>

@@ -34,9 +34,7 @@ class MyStore extends Utilities
         if ($this->con) {
             $stmt = $this->con->prepare("SELECT * FROM members");
             $stmt->execute();
-
             $users = $stmt->fetchAll();
-
             $this->closeConnection();
 
             return $users;
@@ -55,57 +53,70 @@ class MyStore extends Utilities
 
             $this->openConnection();
             $statement = $this->con->prepare("SELECT *
-                                                  FROM members
-                                                  WHERE email =? AND password =?");
-            $statement->execute([$email, $password]);
-            $user = $statement->fetch();
+                                              FROM members
+                                              WHERE email =? AND password =?");
 
+            $statement->execute([$email, $password]);
+            //get user details
+            $user = $statement->fetch();
+            //get count
             $total = $statement->rowCount();
 
+            //checker if user exist
             if ($total > 0) {
-                
-                echo "<h1 style='text-align:center;margin:3rem'>Welcome {$user['first_name']} {$user['last_name']}!</h1> <br/> <a style='text-align:center;margin:3rem 35rem' href='products.php'>See products<a/> <a style='text-align:center;margin:3rem 35rem' href='logout.php'>logout<a/>";
-                header("Location: index.php");
+
+                //echo "<h1>{$user['first_name']} {$user['last_name']}</h1>";
                 $this->setUserData($user);
+                header("Location: index.php");
             } else {
-                echo "";
+                echo "<h1>No email exist</h1>";
 
             }
+
             return $total;
         }
     }
-    public function setUserData($array)
+    public function setUserData($user)
     {
-        if (isset($_SESSION)) {
+
+        //check if session is set
+        if (session_status() == PHP_SESSION_NONE) {
             session_start();
         }
+
         $_SESSION['userdata'] = array(
-            "fullname" => $array['first_name'] . $array['last_name'],
-             "access" => $array['access'],
+            "fullname" => $user['first_name'] . ' ' . $user['last_name'],
+            "access" => $user['access'],
         );
+
         return $_SESSION['userdata'];
     }
 
     public function getUserData()
     {
-        if (isset($_SESSION)) {
+        if (session_status() == PHP_SESSION_NONE) {
             session_start();
         }
+
         if (isset($_SESSION['userdata'])) {
+            //echo "<h1>{$_SESSION['userdata']}</h1>";
             return $_SESSION['userdata'];
         } else {
-            return null;
+            echo "<h1>No user info</h1>";
         }
+
     }
 
     public function logout()
     {
 
-        if (isset($_SESSION)) {
+        if (session_status() == PHP_SESSION_NONE) {
             session_start();
         }
         $_SESSION['userdata'] = null;
+        $_SESSION = [];
         unset($_SESSION['userdata']);
+        session_destroy();
     }
 
     public function checkUserExist($e)
@@ -206,9 +217,10 @@ class MyStore extends Utilities
     public function getSingleProduct($id)
     {
         $this->openConnection();
-        $statement = $this->con->prepare("SELECT * 
-                                          FROM products 
-                                          WHERE ID = ?");
+        $statement = $this->con->prepare("SELECT t1.ID,product_name,product_type,min_stocks,SUM(qty) as total
+                                          FROM (SELECT * FROM  products
+                                          WHERE products.ID =?)t1
+                                          INNER JOIN product_items t2 on t1.ID = t2.product_id");
         $statement->execute([$id]);
         //query result
         $products = $statement->fetch();
@@ -216,7 +228,6 @@ class MyStore extends Utilities
 
         if ($total > 0) {
 
-           
             return $products;
         } else {
 
@@ -225,26 +236,53 @@ class MyStore extends Utilities
 
     }
 
+    public function getTotalQty($product_id)
+    {
+
+        $this->openConnection();
+        $statement = $this->con->prepare("SELECT *,SUM(qty) as total FROM product_items WHERE product_id = ?");
+        $statement->execute([$product_id]);
+        $product_qty = $statement->fetch();
+
+        return $product_qty['total'];
+
+    }
+
     public function addStock()
     {
 
         if (isset($_POST['add_stock'])) {
 
-
-
             $brand_name = $_POST['brand_name'];
             $product_id = $_POST['product_id'];
             $qty = $_POST['qty'];
+            $price = $_POST['price'];
             $batch_number = $_POST['batch_number'];
             $added_by = $_POST['added_by'];
-        
-            $this -> openConnection();
-            $statement = $this->con ->prepare('INSERT INTO product_items VALUES(?,?,?,?)');
-            $statement->execute([$product_id, $qty, $brand_name,$added_by]);
 
-                //redirect
-                header("Location:productDetails.php?id=".$product_id);
+            $this->openConnection();
+            $statement = $this->con->prepare('INSERT INTO product_items (`product_id`, `qty`, `vendor`, `added_by`) VALUES(?,?,?,?,?,?)');
+            $statement->execute([$product_id, $qty, $price, $brand_name, $batch_number, $added_by]);
+
+            //redirect
+            header("Location:productDetails.php?id=" . $product_id);
         }
+
+    }
+
+    public function viewAllStocks($product_id)
+    {
+        $this->openConnection();
+        $statement = $this->con->prepare("SELECT * FROM product_items WHERE product_id = ?");
+        $statement->execute([$product_id]);
+        $stocks = $statement->fetchAll();
+        $total = $statement->rowCount();
+
+        if ($total > 0) {
+
+            return $stocks;
+
+        } else {return false;}
 
     }
 }
