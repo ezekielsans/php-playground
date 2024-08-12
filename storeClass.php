@@ -261,7 +261,7 @@ class MyStore extends Utilities
             $added_by = $_POST['added_by'];
 
             $this->openConnection();
-            $statement = $this->con->prepare('INSERT INTO product_items (`product_id`, `qty`, `vendor`, `added_by`) VALUES(?,?,?,?,?,?)');
+            $statement = $this->con->prepare('INSERT INTO product_items (`product_id`, `qty`, `vendor`, `added_by`) VALUES(?,?,?,?,?)');
             $statement->execute([$product_id, $qty, $price, $brand_name, $batch_number, $added_by]);
 
             //redirect
