@@ -6,12 +6,14 @@ require_once 'storeClass.php';
 $userDetails = $store->getUserData();
 print_r($userDetails);
 
-if (!$userDetails || $userDetails['access'] == "administrator") {
+if (!$userDetails || !$userDetails['access'] == "administrator") {
         header("Location:login.php");
        exit();
     }
     $id = $_GET['id'];
     $product = $store->getSingleProduct($id);
+
+    print_r($product);
     $store->addStock();
 
 
@@ -31,7 +33,7 @@ if (!$userDetails || $userDetails['access'] == "administrator") {
     <h1>Add New Stocks</h1>
     <a href="index.php">Return</a>
     </nav>
-    <form action="" method="post">
+    <form method="post">
         <div class="form-container">
         <label for="">Brand Name</label>
         <input type="text" name="brand_name" id="brand_name" require>

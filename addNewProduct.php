@@ -45,6 +45,7 @@ $store->addProduct();
         <div class="form-group">
             <label for="minStock">Minimum Stocks</label>
             <input type="number" name="minStock" id="minStock" min="1" value="1" required>
+            <input type="hidden" name="addedBy" id="addedBy" value="<?=$userDetails['fullname']?>">
         </div>
         <div class="form-group">
             <button type="submit" name="addProduct">Add Product</button>

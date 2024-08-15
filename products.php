@@ -5,7 +5,7 @@ require_once('storeClass.php');
 //$id = $_GET['id'];
 $products = $store->getProducts();
 
-
+print_r($products);
 
 ?>
 
@@ -26,11 +26,9 @@ $products = $store->getProducts();
 <div class="container">
 <ul>
 
-<?php 
+<?php foreach ($products as $product){?>
 
-foreach ($products as $product){?>
-
-    <li><a href="productDetails.php?id=<?=$product['ID'];?>"><?= $product['product_name'];?> | <?=$product['min_stocks'];?> </a></li>
+    <li><a href="productDetails.php?id=<?=$product['ID'];?>"><?= $product['product_name'];?>  |  <?=$product['min_stocks'];?> </a></li>
 
 <?php } ?>
 

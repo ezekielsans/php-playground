@@ -179,13 +179,15 @@ class MyStore extends Utilities
             $product_name = $_POST['productName'];
             $product_type = $_POST['productType'];
             $min_stock = $_POST['minStock'];
+            $min_stock = $_POST['minStock'];
+            $added_by = $_POST['addedBy'];
             echo $product_name, "\n" . $product_type, "\n" . $min_stock;
 
             if ($this->checkProductExist($product_name) == 0) {
 
                 $this->openConnection();
-                $statement = $this->con->prepare("INSERT INTO products (`product_name`, `product_type`, `min_stocks`) VALUES (?,?,?) ");
-                $statement->execute([$product_name, $product_type, $min_stock]);
+                $statement = $this->con->prepare("INSERT INTO products (`product_name`, `product_type`, `min_stocks`,`added_by`) VALUES (?,?,?,?) ");
+                $statement->execute([$product_name, $product_type, $min_stock,$added_by]);
 
             } else {
 
@@ -214,17 +216,26 @@ class MyStore extends Utilities
 
     }
 
+
     public function getSingleProduct($id)
     {
         $this->openConnection();
-        $statement = $this->con->prepare("SELECT t1.ID,product_name,product_type,min_stocks,SUM(qty) as total
-                                          FROM (SELECT * FROM  products
-                                          WHERE products.ID =?)t1
-                                          INNER JOIN product_items t2 on t1.ID = t2.product_id");
+        $statement = $this->con->prepare("SELECT t1.ID,
+                                                 t1.product_name,
+                                                 t1.product_type,
+                                                 t1.min_stocks,
+                                                 SUM(t2.qty) as total
+                                          FROM products t1 
+                                          LEFT JOIN product_items t2 ON t1.ID = t2.product_id 
+                                          WHERE t1.ID =?
+                                          GROUP BY  t1.ID, 
+                                                    t1.product_name,
+                                                    t1.product_type,
+                                                    t1.min_stocks");
         $statement->execute([$id]);
         //query result
-        $products = $statement->fetch();
         $total = $statement->rowCount();
+        $products = $statement->fetch();
 
         if ($total > 0) {
 
@@ -233,6 +244,8 @@ class MyStore extends Utilities
 
             return $this->show404();
         }
+        
+        
 
     }
 
@@ -240,7 +253,9 @@ class MyStore extends Utilities
     {
 
         $this->openConnection();
-        $statement = $this->con->prepare("SELECT *,SUM(qty) as total FROM product_items WHERE product_id = ?");
+        $statement = $this->con->prepare("SELECT *,SUM(qty) as total 
+                                          FROM product_items 
+                                          WHERE product_id = ?");
         $statement->execute([$product_id]);
         $product_qty = $statement->fetch();
 
@@ -253,16 +268,31 @@ class MyStore extends Utilities
 
         if (isset($_POST['add_stock'])) {
 
-            $brand_name = $_POST['brand_name'];
+            $vendor = $_POST['brand_name'];
             $product_id = $_POST['product_id'];
             $qty = $_POST['qty'];
             $price = $_POST['price'];
             $batch_number = $_POST['batch_number'];
             $added_by = $_POST['added_by'];
 
+            if (empty($product_id)) {
+                echo "Product ID is missing.";
+                return;
+            }
+
+
             $this->openConnection();
-            $statement = $this->con->prepare('INSERT INTO product_items (`product_id`, `qty`, `vendor`, `added_by`) VALUES(?,?,?,?,?)');
-            $statement->execute([$product_id, $qty, $price, $brand_name, $batch_number, $added_by]);
+
+             // Check if the product_id exists in the products table
+            $productCheck = $this->con->prepare("SELECT ID FROM products WHERE ID = ?");
+            $productCheck->execute([$product_id]);
+            if ($productCheck->rowCount() == 0) {
+                echo "Invalid product ID.";
+                return;
+        }
+
+            $statement = $this->con->prepare('INSERT INTO product_items (`product_id`, `qty`,`price`, `vendor`,`batch_number`, `added_by`) VALUES(?,?,?,?,?,?)');
+            $statement->execute([$product_id, $qty, $price, $vendor, $batch_number, $added_by]);
 
             //redirect
             header("Location:productDetails.php?id=" . $product_id);
@@ -275,6 +305,24 @@ class MyStore extends Utilities
         $this->openConnection();
         $statement = $this->con->prepare("SELECT * FROM product_items WHERE product_id = ?");
         $statement->execute([$product_id]);
+        $stocks = $statement->fetch();
+        $total = $statement->rowCount();
+
+        if ($total > 0) {
+
+            return $stocks;
+
+        } else {
+            return false;
+        }
+
+    }
+
+    public function getStockDetails($stock_id)
+    {
+        $this->openConnection();
+        $statement = $this->con->prepare("SELECT * FROM product_items WHERE ID = ?");
+        $statement->execute([$stock_id]);
         $stocks = $statement->fetchAll();
         $total = $statement->rowCount();
 
@@ -284,6 +332,16 @@ class MyStore extends Utilities
 
         } else {return false;}
 
+    }
+    public function insertSales($stock_id, $qty, $price, $product_id, $customerName)
+    {
+
+        $item = $this->getStockDetails($stock_id);
+        $brand = $item['brand_name'];
+    
+        $this->openConnection();
+        $statement = $this->con->prepare("INSERT INTO sales(`product_id`, `stocks_id`, `vendor`, `qty`, `price`, `customer_name`) VALUES (?,?,?,?,?,?)");
+        $statement->execute([$product_id,$stock_id,$brand, $qty, $price, $customerName]);
     }
 }
 
