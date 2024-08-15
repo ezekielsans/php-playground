@@ -20,7 +20,7 @@ if (!$product) {
 }
 
 
-echo "<br>".print_r($product);
+echo "<br>"."products"."<br>".print_r($product);
 // Fetch user details
 $userDetails = $store->getUserData();
 if (!$userDetails || $userDetails['access'] !== "administrator") {
@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_stock'])) {
 // Fetch all stocks
 $stocks = $store->viewAllStocks($id);
 
-echo "<br>".print_r($stocks );
+echo "<br>"."Stocks"."<br>".print_r($stocks);
 
 ?>
 

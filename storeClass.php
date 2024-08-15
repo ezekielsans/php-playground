@@ -303,13 +303,14 @@ class MyStore extends Utilities
     public function viewAllStocks($product_id)
     {
         $this->openConnection();
-        $statement = $this->con->prepare("SELECT * FROM product_items WHERE product_id = ?");
+        $statement = $this->con->prepare("SELECT * 
+                                          FROM product_items 
+                                          WHERE product_id = ?");
         $statement->execute([$product_id]);
-        $stocks = $statement->fetch();
+        $stocks = $statement->fetchAll();
         $total = $statement->rowCount();
 
         if ($total > 0) {
-
             return $stocks;
 
         } else {
