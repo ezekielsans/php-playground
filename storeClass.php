@@ -303,10 +303,22 @@ class MyStore extends Utilities
     public function viewAllStocks($product_id)
     {
         $this->openConnection();
-        $statement = $this->con->prepare("SELECT * 
-                                          FROM product_items 
-                                          WHERE product_id = ?");
-        $statement->execute([$product_id]);
+        // $statement = $this->con->prepare("SELECT * 
+        //                                   FROM product_items 
+        //                                   WHERE product_id = ?");
+        $statement = $this->con->prepare("SELECT t1.ID,
+                                                 t1.vendor,
+                                                 t1.price,
+                                                 t2.ID,
+                                                 t1.qty,
+                                                 SUM(t2.qty) AS sale_qty,
+                                                 SUM(t2.qty * t2.price) AS total_sales
+                                          FROM product_items t1
+                                          INNER JOIN sales t2 ON t1.ID = t2.stocks_id
+                                          GROUP BY t1.ID");
+        // WHERE product_id = ?
+        //$statement->execute([$product_id]);
+        $statement->execute();
         $stocks = $statement->fetchAll();
         $total = $statement->rowCount();
 
@@ -322,27 +334,33 @@ class MyStore extends Utilities
     public function getStockDetails($stock_id)
     {
         $this->openConnection();
-        $statement = $this->con->prepare("SELECT * FROM product_items WHERE ID = ?");
+        $statement = $this->con->prepare("SELECT * 
+                                          FROM product_items 
+                                          WHERE ID = ?");
         $statement->execute([$stock_id]);
-        $stocks = $statement->fetchAll();
+        //$stocks = $statement->fetchAll();
+        $stocks = $statement->fetch();
         $total = $statement->rowCount();
 
         if ($total > 0) {
 
             return $stocks;
 
-        } else {return false;}
+        } else {
+            return false;
+        }
 
     }
-    public function insertSales($stock_id, $qty, $price, $product_id, $customerName)
+    public function insertSales($stock_id,$qty, $price, $product_id, $customerName)
     {
 
         $item = $this->getStockDetails($stock_id);
-        $brand = $item['brand_name'];
+        $brand = $item['vendor'];
+        $multiplied_price = $qty * $price;
     
         $this->openConnection();
-        $statement = $this->con->prepare("INSERT INTO sales(`product_id`, `stocks_id`, `vendor`, `qty`, `price`, `customer_name`) VALUES (?,?,?,?,?,?)");
-        $statement->execute([$product_id,$stock_id,$brand, $qty, $price, $customerName]);
+        $statement = $this->con->prepare("INSERT INTO sales(`product_id`, `stocks_id`, `brand_name`, `qty`, `price`, `customer_name`) VALUES (?,?,?,?,?,?)");
+        $statement->execute([$product_id,$stock_id,$brand,$qty,$multiplied_price,$customerName]);
     }
 }
 

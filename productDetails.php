@@ -3,12 +3,16 @@ require_once 'storeClass.php';
 
 // Ensure store class is instantiated
 $store = new MyStore();
-
 // Validate and sanitize the input
 $id = isset($_GET['id']) ? filter_var($_GET['id'], FILTER_SANITIZE_NUMBER_INT) : null;
-
 if (!$id) {
     echo "Invalid product ID.";
+    exit();
+}
+// Fetch user details
+$userDetails = $store->getUserData();
+if (!$userDetails || $userDetails['access'] !== "administrator") {
+    header("Location: login.php");
     exit();
 }
 
@@ -21,12 +25,6 @@ if (!$product) {
 
 
 echo "<br>"."products"."<br>".print_r($product);
-// Fetch user details
-$userDetails = $store->getUserData();
-if (!$userDetails || $userDetails['access'] !== "administrator") {
-    header("Location: login.php");
-    exit();
-}
 
 // Handle add stock if form is submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_stock'])) {
@@ -57,8 +55,29 @@ echo "<br>"."Stocks"."<br>".print_r($stocks);
     <hr>
 
     <h2>Available Product Items</h2>
+
+
+<table border="1">
+    <thead>
+        <tr>
+        <th>Action</th>
+        <th>Base Stock Qty</th>
+        <th>SRP</th>
+        <th>Sales</th>
+        <th>Total Sales</th>
+        <th>Qty Remaining</th>
+        <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+
+
+
     <?php if ($stocks): ?>
         <?php foreach ($stocks as $stock): ?>
+        <?php $sum = $stock['qty'] - $stock['sale_qty'] ?>
+            <tr>
+            <td>
             <div id="parent_<?=$stock['ID']?>">
                 <label><?=htmlspecialchars($stock['vendor']);?> <strong>,</strong> <?=htmlspecialchars($stock['qty']);?></label>
                 <input type="number" name="qty[]" min="1" max="<?=$stock['qty'];?>" value="1"></input>
@@ -67,21 +86,48 @@ echo "<br>"."Stocks"."<br>".print_r($stocks);
                 <button type="button" class="addToCart">Add to cart</button>
                 <button type="button" class="removeToCart" id="<?=$stock['ID']?>" disabled>Remove</button>
             </div>
-        <?php endforeach;?>
+            </td>
+            <td><?= $stock['qty'];?></td>
+            <td><?=sprintf('%01.2f',$stock['price']);?></td>
+            <td><?= $stock['sale_qty'];?></td>
+            <td><?=sprintf('%01.2f',$stock['total_sales']);?></td>
+            <td><?= $sum;?></td>
+            <td><?= ($sum ==0)? 'Out of stock':'Avaiable';?></td>
+
+        </tr>
+            <?php endforeach;?>
     <?php else: ?>
         <p>No stocks available.</p>
     <?php endif;?>
 
+
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+    <br>
+
     <a href="products.php">Products</a>
     <a href="addNewStocks.php?id=<?=$product['ID'];?>">Add new stocks</a>
+    
+    
     <hr>
-
     <h2>Cart</h2>
     <form action="checkout.php" method="post" id="checkout_form">
         <input type="hidden" name="customer_name" value="<?=htmlspecialchars($userDetails['fullname']);?>"/>
         <input type="hidden" name="product_id" value="<?=htmlspecialchars($product['ID']);?>"/>
-
-    <?php echo "<h1> {$product['ID']} </h1>"."<br>" .print_r($product['ID'])."<br>";?>
+    <br>
+        <div class="form-group">
+        <label><name="checkout_price" id ="checkout_price"  strong>Checkout price: </name=></label>
+    </div>
         <button type="submit" id="checkout_button">Proceed to checkout</button>
     </form>
 

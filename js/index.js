@@ -1,5 +1,7 @@
 const add_cart = document.querySelectorAll('.addToCart');
 const form_cart = document.querySelector('#checkout_form');
+const checkout_price = document.querySelector('#checkout_price');
+
 
 
 
@@ -8,15 +10,25 @@ if (add_cart) {
         element.addEventListener('click', () => {
 
             let added_item = element.parentNode.cloneNode(true);
-
-
             element.parentNode.classList.add('disabledButton');
             form_cart.prepend(added_item);
-            added_item.children[4].removeAttribute('disabled');
+            console.log(added_item.children);
+            added_item.children[5].removeAttribute('disabled');
             activeRemove();
+
+
+            console.log(added_item.children);
         });
     });
 }
+
+
+
+
+
+
+
+
 function activeRemove() {
     
     const remove_to_cart = document.querySelectorAll('.removeToCart');
