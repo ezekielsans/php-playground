@@ -1,5 +1,5 @@
 <?php
-require_once('storeClass.php');
+require_once 'storeClass.php';
 $store->login();
 ?>
 <!DOCTYPE html>
@@ -8,29 +8,51 @@ $store->login();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login page</title>
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/login.css">
 </head>
 <body>
+<header>
+        <div class="logo">
+            <img src="/assets/e-commerce-logo.png" alt="Foodnautica E-Store">
+            <h1>Foodnautica E-Store</h1>
+        </div>
+        <div class="help-link">
+            <a href="#">Need help?</a>
+        </div>
+    </header>
     <div class="container">
+        <div class="left">
 
-    <h1>Login Page</h1>
+        <h2>Your go-to online store for tools, foods, and clothing</h2>
+        </div>
 
-<div class="form-container">
-
-<form action="" method="post" >
-<div class="form-input">
-<label for="">Username</label>
-<input type="text" name="email" id="email"/>
-</div>
-<div class="form-input">
-<label for="">Password</label>
-<input type="password" name="password" id="password"/>
-</div>
-<button type="submit" name="submit">Login</button>
-</form>
-</div>
-
-
+        <div class="right">
+            <div class="login-box">
+                <h2>Log In</h2>
+                <form action="" method="post">
+                    <input type="text" name="email" placeholder="Username / Email" required>
+                    <input type="password" name="password" placeholder="Password" required>
+                    <button type="submit" name="submit"</button>Log In</button>
+                    <div class="form-links">
+                        <a href="#">Forgot Password</a>
+                        <a href="#">Log In with Phone Number</a>
+                    </div>
+                    <div class="or-separator">OR</div>
+                    <div class="social-login">
+                        <button class="facebook">Login with Facebook</button>
+                        <button class="google">Login with Google</button>
+                    </div>
+                    <p>New to Foodnautica? <a href="#">Sign Up</a></p>
+                </form>
+            </div>
+        </div>
     </div>
+    <footer>
+        <div class="footer">
+        <h4>
+    Developed by Ezekiel Santos © <?php echo date('Y'); ?>
+    </h4>
+    </div>
+    </footer>
 </body>
 </html>

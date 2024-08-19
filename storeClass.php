@@ -309,16 +309,16 @@ class MyStore extends Utilities
         $statement = $this->con->prepare("SELECT t1.ID,
                                                  t1.vendor,
                                                  t1.price,
-                                                 t2.ID,
                                                  t1.qty,
                                                  SUM(t2.qty) AS sale_qty,
                                                  SUM(t2.qty * t2.price) AS total_sales
                                           FROM product_items t1
-                                          INNER JOIN sales t2 ON t1.ID = t2.stocks_id
+                                          LEFT JOIN sales t2 ON t1.ID = t2.stocks_id
+                                          WHERE t1.product_id = ?
                                           GROUP BY t1.ID");
         // WHERE product_id = ?
-        //$statement->execute([$product_id]);
-        $statement->execute();
+        $statement->execute([$product_id]);
+        //$statement->execute();
         $stocks = $statement->fetchAll();
         $total = $statement->rowCount();
 

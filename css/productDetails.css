@@ -1,14 +1,10 @@
 body{
-
 font-family: Arial, Helvetica, sans-serif;
 }
 
 
 #checkout_button{
-
-
 margin-top: 1rem;
-
 }
 
 .disabledButton{
@@ -20,5 +16,26 @@ margin-top: 1rem;
 a{
 
   margin-left: 1rem;
+
+}
+
+.table-container{
+display: flex;
+flex-direction: column;
+margin: 0.5rem 0.5rem;
+}
+
+#tc-title{
+
+text-align: center;
+
+
+}
+
+.table-container .links {
+display: flex;
+flex-direction: row;
+align-items: center;
+justify-content: center;
 
 }
