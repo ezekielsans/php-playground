@@ -40,3 +40,14 @@ color: black;
 transition: 3ms ease-in-out;    
     
     }
+
+
+    
+.footer {
+
+    display: flex;
+    justify-content: center;
+    padding: 10px 20px;
+    background-color: var(--secondary-color);
+    box-shadow: 0 2px 4px rgba(0, 0, 1, 0.5);
+}

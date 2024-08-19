@@ -24,15 +24,22 @@ if(!$userDetails ){
     <link rel="stylesheet" href="/css/index.css">
 </head>
 <body>
+    <header>
     <div class="nav-container">
-    <a  href='products.php'>See products<a/>
+        <a  href='products.php'>See products<a/>
     <a href='addNewUser.php'>Add New User<a/>
     <a href='addNewProduct.php'>Add New Product<a/>
     <a  href='logout.php'>Logout<a/>
+    </header>
 </div>
 <div class="content-container">
         <h1 style="text-align: center; font: size 2rem;">Welcome to my Store <?= $userDetails['fullname']?></h1>
         <h1>What's new?</h1>
     </div>
+    <?php
+      include "./components/footer.component.php";
+      echo callFooter();
+    
+    ?>
 </body>
 </html>

@@ -56,15 +56,17 @@ header {
 
 .container {
     display: flex;
-    justify-content: center;
+ 
+
+    justify-content: space-between;
     align-items: center;
-    height: calc(100vh - 175px); /* Adjust height to subtract the header */
+    padding: 20px;
+   /* Adjust height to subtract the header */
     background-color: var(--main-color);
 }
 
 .left {
     flex: 1;
-  
     color: var(--secondary-color);
     text-align: center;
     padding: 50px;
@@ -81,8 +83,11 @@ header {
     display: flex;
     justify-content: center;
     align-items: center;
-}.login-box {
-    width: 300px;
+}
+
+.login-box {
+    width: 400px;
+    height: auto;
     padding: 20px;
     background-color: var(--secondary-color);
     border-radius: 8px;
@@ -210,6 +215,8 @@ header {
 .login-box p a:hover {
     text-decoration: underline;
 }
+
+
 
 .footer {
 

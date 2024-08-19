@@ -44,6 +44,7 @@ class MyStore extends Utilities
         }
     }
 
+
     public function login()
     {
 
@@ -76,6 +77,39 @@ class MyStore extends Utilities
             return $total;
         }
     }
+
+
+    //register new user
+
+
+    public function registerUser(){
+
+        if (isset($_POST['submit'])) {
+
+            //declare variables to insert
+            $email = $_POST['email'];
+            $password = md5($_POST['password']);
+            $firstName = $_POST['firstName'];
+            $lastName = $_POST['lastName'];
+            $mobileNo = $_POST['mobileNo'];
+            $access = 'user'; //set to user 
+    
+            if ($this->checkUserExist($email) == 0) {
+    
+                $this->openConnection();
+                $statement = $this->con->prepare('INSERT INTO members(`email`,`password`,`first_name`,`last_name`,`mobile_no`,`access`)
+                                                  VALUES(?,?,?,?,?,?)');
+                $statement->execute([$email, $password, $firstName, $lastName, $mobileNo, $access]);
+    
+            } else {
+                echo "<h1>User already exist</h1>";
+            }
+        }
+    }
+
+
+    
+
     public function setUserData($user)
     {
 
@@ -137,7 +171,8 @@ class MyStore extends Utilities
     }
 
     public function addUser()
-    {if (isset($_POST['add'])) {
+    {
+        if (isset($_POST['add'])) {
 
         //declare variables to insert
         $email = $_POST['email'];
@@ -159,7 +194,9 @@ class MyStore extends Utilities
 
         }
 
-    }}
+    }
+}
+
 
     public function checkProductExist($name)
     {

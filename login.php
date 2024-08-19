@@ -42,17 +42,14 @@ $store->login();
                         <button class="facebook">Login with Facebook</button>
                         <button class="google">Login with Google</button>
                     </div>
-                    <p>New to Foodnautica? <a href="#">Sign Up</a></p>
+                    <p>New to Foodnautica? <a href='signUp.php'>Sign Up</a></p>
                 </form>
             </div>
         </div>
     </div>
-    <footer>
-        <div class="footer">
-        <h4>
-    Developed by Ezekiel Santos © <?php echo date('Y'); ?>
-    </h4>
-    </div>
-    </footer>
+    <?php 
+        include "./components/footer.component.php";
+        echo callFooter();
+    ?>
 </body>
 </html>
