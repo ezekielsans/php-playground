@@ -1,5 +1,5 @@
 <?php
-include_once('storeClass.php');
+require_once '../controller/storeClass.php';
 $total = count($_POST['stock_id']);
 print_r($_POST);
 print_r($total);

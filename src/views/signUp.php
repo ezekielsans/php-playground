@@ -1,5 +1,5 @@
 <?php
-require_once 'storeClass.php';
+require_once '../controller/storeClass.php';
 $store->registerUser();
 ?>
 <!DOCTYPE html>
@@ -14,7 +14,7 @@ $store->registerUser();
 <header>
         <div class="logo">
             <img src="/assets/e-commerce-logo.png" alt="Foodnautica E-Store">
-            <h1>Foodnautica E-Store</h1>
+            <a href="login.php"><h1>Foodnautica E-Store</h1></a>
         </div>
         <div class="help-link">
             <a href="#">Need help?</a>
@@ -30,8 +30,10 @@ $store->registerUser();
             <div class="login-box">
                 <h2>Sign-up</h2>
                 <form action="" method="post">
+                    <div class="form-group">
                     <input type="text" name="lastName" placeholder="Enter Last Name" required>
                     <input type="text" name="firstName" placeholder="Enter First Name" required>
+                    </div>
                     <input type="text" name="email" placeholder="Enter Email" required>
                     <input type="password" name="password" placeholder="Password" required>
                     <input type="text" name="mobileNo" placeholder="Enter Mobile no." required>

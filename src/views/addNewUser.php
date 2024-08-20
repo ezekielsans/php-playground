@@ -1,5 +1,5 @@
 <?php
-require_once 'storeClass.php';
+require_once '../controller/storeClass.php';
 
 // Initialize the storeClass
 
@@ -25,7 +25,7 @@ $store->addUser();
 <body>
     <nav class="navbar">
     <h1 id="title">Add New Customer/User</h1>
-    <a href="index.php">return</a>
+    <a href="./adminIndex.php">return</a>
     </nav>
     <div class="container">
 

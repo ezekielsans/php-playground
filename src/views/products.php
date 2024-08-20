@@ -1,6 +1,6 @@
 <?php 
 
-require_once('storeClass.php');
+require_once '../controller/storeClass.php';
 
 //$id = $_GET['id'];
 $products = $store->getProducts();
@@ -20,7 +20,7 @@ print_r($products);
 <body>
     <nav class="navbar">
   <h1 id="title"</h1>Products Section</h1>
-    <a href="index.php">Return</a>
+    <a href="./adminIndex.php">Return</a>
 
     </nav>
 <div class="container">

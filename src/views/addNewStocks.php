@@ -1,5 +1,5 @@
 <?php
-require_once 'storeClass.php';
+require_once '../controller/storeClass.php';
 
 //session_start();
 
@@ -31,7 +31,7 @@ if (!$userDetails || !$userDetails['access'] == "administrator") {
 <body>
     <nav class="navbar">
     <h1>Add New Stocks</h1>
-    <a href="index.php">Return</a>
+    <a href="./adminIndex.php">Return</a>
     </nav>
     <form method="post">
         <div class="form-container">

@@ -44,7 +44,6 @@ class MyStore extends Utilities
         }
     }
 
-
     public function login()
     {
 
@@ -68,7 +67,13 @@ class MyStore extends Utilities
 
                 //echo "<h1>{$user['first_name']} {$user['last_name']}</h1>";
                 $this->setUserData($user);
-                header("Location: index.php");
+
+                if ($user['access'] == 'user') {
+
+                    header("Location: userIndex.php");
+                } elseif ($user['access'] == 'administrator') {
+                    header("Location: adminIndex.php");
+                }
             } else {
                 echo "<h1>No email exist</h1>";
 
@@ -78,11 +83,10 @@ class MyStore extends Utilities
         }
     }
 
-
     //register new user
 
-
-    public function registerUser(){
+    public function registerUser()
+    {
 
         if (isset($_POST['submit'])) {
 
@@ -92,23 +96,20 @@ class MyStore extends Utilities
             $firstName = $_POST['firstName'];
             $lastName = $_POST['lastName'];
             $mobileNo = $_POST['mobileNo'];
-            $access = 'user'; //set to user 
-    
+            $access = 'user'; //set to user
+
             if ($this->checkUserExist($email) == 0) {
-    
+
                 $this->openConnection();
                 $statement = $this->con->prepare('INSERT INTO members(`email`,`password`,`first_name`,`last_name`,`mobile_no`,`access`)
                                                   VALUES(?,?,?,?,?,?)');
                 $statement->execute([$email, $password, $firstName, $lastName, $mobileNo, $access]);
-    
+
             } else {
                 echo "<h1>User already exist</h1>";
             }
         }
     }
-
-
-    
 
     public function setUserData($user)
     {
@@ -174,29 +175,28 @@ class MyStore extends Utilities
     {
         if (isset($_POST['add'])) {
 
-        //declare variables to insert
-        $email = $_POST['email'];
-        $password = md5($_POST['password']);
-        $firstName = $_POST['firstName'];
-        $lastName = $_POST['lastName'];
-        $mobileNo = $_POST['mobileNo'];
+            //declare variables to insert
+            $email = $_POST['email'];
+            $password = md5($_POST['password']);
+            $firstName = $_POST['firstName'];
+            $lastName = $_POST['lastName'];
+            $mobileNo = $_POST['mobileNo'];
 
-        if ($this->checkUserExist($email) == 0) {
+            if ($this->checkUserExist($email) == 0) {
 
-            $this->openConnection();
-            $statement = $this->con->prepare('INSERT INTO members(`email`,`password`,`first_name`,`last_name`,`mobile_no`)
+                $this->openConnection();
+                $statement = $this->con->prepare('INSERT INTO members(`email`,`password`,`first_name`,`last_name`,`mobile_no`)
                                               VALUES(?,?,?,?,?)');
-            $statement->execute([$email, $password, $firstName, $lastName, $mobileNo]);
+                $statement->execute([$email, $password, $firstName, $lastName, $mobileNo]);
 
-        } else {
+            } else {
 
-            echo "<h1>User already exist</h1>";
+                echo "<h1>User already exist</h1>";
+
+            }
 
         }
-
     }
-}
-
 
     public function checkProductExist($name)
     {
@@ -224,7 +224,7 @@ class MyStore extends Utilities
 
                 $this->openConnection();
                 $statement = $this->con->prepare("INSERT INTO products (`product_name`, `product_type`, `min_stocks`,`added_by`) VALUES (?,?,?,?) ");
-                $statement->execute([$product_name, $product_type, $min_stock,$added_by]);
+                $statement->execute([$product_name, $product_type, $min_stock, $added_by]);
 
             } else {
 
@@ -253,7 +253,6 @@ class MyStore extends Utilities
 
     }
 
-
     public function getSingleProduct($id)
     {
         $this->openConnection();
@@ -262,10 +261,10 @@ class MyStore extends Utilities
                                                  t1.product_type,
                                                  t1.min_stocks,
                                                  SUM(t2.qty) as total
-                                          FROM products t1 
-                                          LEFT JOIN product_items t2 ON t1.ID = t2.product_id 
+                                          FROM products t1
+                                          LEFT JOIN product_items t2 ON t1.ID = t2.product_id
                                           WHERE t1.ID =?
-                                          GROUP BY  t1.ID, 
+                                          GROUP BY  t1.ID,
                                                     t1.product_name,
                                                     t1.product_type,
                                                     t1.min_stocks");
@@ -281,8 +280,6 @@ class MyStore extends Utilities
 
             return $this->show404();
         }
-        
-        
 
     }
 
@@ -290,8 +287,8 @@ class MyStore extends Utilities
     {
 
         $this->openConnection();
-        $statement = $this->con->prepare("SELECT *,SUM(qty) as total 
-                                          FROM product_items 
+        $statement = $this->con->prepare("SELECT *,SUM(qty) as total
+                                          FROM product_items
                                           WHERE product_id = ?");
         $statement->execute([$product_id]);
         $product_qty = $statement->fetch();
@@ -317,16 +314,15 @@ class MyStore extends Utilities
                 return;
             }
 
-
             $this->openConnection();
 
-             // Check if the product_id exists in the products table
+            // Check if the product_id exists in the products table
             $productCheck = $this->con->prepare("SELECT ID FROM products WHERE ID = ?");
             $productCheck->execute([$product_id]);
             if ($productCheck->rowCount() == 0) {
                 echo "Invalid product ID.";
                 return;
-        }
+            }
 
             $statement = $this->con->prepare('INSERT INTO product_items (`product_id`, `qty`,`price`, `vendor`,`batch_number`, `added_by`) VALUES(?,?,?,?,?,?)');
             $statement->execute([$product_id, $qty, $price, $vendor, $batch_number, $added_by]);
@@ -340,8 +336,8 @@ class MyStore extends Utilities
     public function viewAllStocks($product_id)
     {
         $this->openConnection();
-        // $statement = $this->con->prepare("SELECT * 
-        //                                   FROM product_items 
+        // $statement = $this->con->prepare("SELECT *
+        //                                   FROM product_items
         //                                   WHERE product_id = ?");
         $statement = $this->con->prepare("SELECT t1.ID,
                                                  t1.vendor,
@@ -371,8 +367,8 @@ class MyStore extends Utilities
     public function getStockDetails($stock_id)
     {
         $this->openConnection();
-        $statement = $this->con->prepare("SELECT * 
-                                          FROM product_items 
+        $statement = $this->con->prepare("SELECT *
+                                          FROM product_items
                                           WHERE ID = ?");
         $statement->execute([$stock_id]);
         //$stocks = $statement->fetchAll();
@@ -388,16 +384,16 @@ class MyStore extends Utilities
         }
 
     }
-    public function insertSales($stock_id,$qty, $price, $product_id, $customerName)
+    public function insertSales($stock_id, $qty, $price, $product_id, $customerName)
     {
 
         $item = $this->getStockDetails($stock_id);
         $brand = $item['vendor'];
         $multiplied_price = $qty * $price;
-    
+
         $this->openConnection();
         $statement = $this->con->prepare("INSERT INTO sales(`product_id`, `stocks_id`, `brand_name`, `qty`, `price`, `customer_name`) VALUES (?,?,?,?,?,?)");
-        $statement->execute([$product_id,$stock_id,$brand,$qty,$multiplied_price,$customerName]);
+        $statement->execute([$product_id, $stock_id, $brand, $qty, $multiplied_price, $customerName]);
     }
 }
 

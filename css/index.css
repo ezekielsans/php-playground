@@ -44,10 +44,12 @@ transition: 3ms ease-in-out;
 
     
 .footer {
-
-    display: flex;
-    justify-content: center;
-    padding: 10px 20px;
+    position: fixed;
+    text-align: center;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    padding: 1.5rem 1.5rem;
     background-color: var(--secondary-color);
     box-shadow: 0 2px 4px rgba(0, 0, 1, 0.5);
 }

@@ -1,5 +1,5 @@
 <?php
-require_once 'storeClass.php';
+require_once '../controller/storeClass.php';
 
 $inventory_array = array();
 // Ensure store class is instantiated

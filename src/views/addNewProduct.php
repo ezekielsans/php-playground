@@ -1,5 +1,5 @@
 <?php
-require_once 'storeClass.php';
+require_once '../controller/storeClass.php';
 
 $users = $store->getUsers();
 $userDetails = $store->getUserData();
@@ -51,7 +51,7 @@ $store->addProduct();
             <button type="submit" name="addProduct">Add Product</button>
         </div>  
         <div class="form-group">
-            <a href="index.php" name="return" >Return</a> 
+            <a href="./adminIndex.php" name="return" >Return</a> 
         </div> 
        
     </form>

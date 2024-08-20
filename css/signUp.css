@@ -28,7 +28,12 @@ body {
     align-items: center;
 }
 
+.logo a {
+    text-decoration: none;
+    color: var(--tertiary-color);
 
+
+}
 .logo img {
     width: 50px;
     height: auto;
@@ -95,8 +100,13 @@ header {
     text-align: center;
 }
 
+.form-group{
+
+    display: flex;
+    gap: 1rem;
+}
 .login-box h2 {
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     font-size: 24px;
     color: #333;
 }
@@ -109,11 +119,13 @@ header {
     border: 1px solid var(--secondary-color);
     border-radius: 4px;
     box-sizing: border-box;
+  
 }
 
 .login-box button[type="submit"] {
     width: 100%;
-    padding: 10px;
+   
+    padding: 10px ;
     background-color: var(--main-color);
     border: none;
     border-radius: 4px;

@@ -1,5 +1,5 @@
 <?php
-require_once 'storeClass.php';
+require_once '../controller/storeClass.php';
 $store->login();
 ?>
 <!DOCTYPE html>
@@ -42,14 +42,13 @@ $store->login();
                         <button class="facebook">Login with Facebook</button>
                         <button class="google">Login with Google</button>
                     </div>
-                    <p>New to Foodnautica? <a href='signUp.php'>Sign Up</a></p>
+                    <p>New to Foodnautica? <a href='../views/signUp.php'>Sign Up</a></p>
                 </form>
             </div>
         </div>
     </div>
     <?php 
-        include "./components/footer.component.php";
-        echo callFooter();
-    ?>
+        include "../../components/footer.component.php";
+        echo callFooter();?>
 </body>
 </html>

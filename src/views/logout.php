@@ -1,5 +1,5 @@
 <?php
-require_once('storeClass.php');
+require_once '../controller/storeClass.php';
 $store->logout();
 header("Location: login.php");
 ?>

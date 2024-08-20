@@ -1,6 +1,6 @@
 <?php
 
-require_once "storeClass.php";
+require_once '../controller/storeClass.php';
 
 $users = $store->getUsers();
 $userDetails = $store->getUserData();
@@ -37,7 +37,7 @@ if(!$userDetails ){
         <h1>What's new?</h1>
     </div>
     <?php
-      include "./components/footer.component.php";
+      include "../../components/footer.component.php";
       echo callFooter();
     
     ?>
