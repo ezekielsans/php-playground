@@ -26,7 +26,7 @@ if (!$userDetails || !$userDetails['access'] == "administrator") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add New Stocks</title>
-    <link rel="stylesheet" href="/css/addNewStocks.css">
+    <link rel="stylesheet" href="../../css/addNewStocks.css">
 </head>
 <body>
     <nav class="navbar">

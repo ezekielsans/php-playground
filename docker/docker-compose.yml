@@ -1,25 +1,26 @@
 services:
-  web:
-    build:
-      context: .
-      dockerfile: ./Dockerfile
+  web-app:
+    image: php:apache
+      # to sync whatever is in your local to your docker image
+    volumes:
+      - "./app:/var/www/html"
     ports:
-      - "8080:80"
-    volumes:
-      - .:/var/www/html
+      - "80:80"
+  db:
+    image: mysql:latest
     environment:
-      - MYSQL_HOST=mysql
-      - MYSQL_USER=root
-      - MYSQL_PASSWORD=secret
-      - MYSQL_DATABASE=mystore
-
-  mysql:
-    image: mysql:5.7
-    environment:
-      MYSQL_ROOT_PASSWORD: secret
-      MYSQL_DATABASE: mystore
+        - MYSQL_HOST=mysql
+        - MYSQL_USER=php_docker
+        - MYSQL_PASSWORD=password
+        - MYSQL_ALLOW_EMPTY_PASSWORD=1
+        - MYSQL_DATABASE=mystore
+    # this is how we persist a sql db even when container stops
     volumes:
-      - db_data:/var/lib/mysql
-
-volumes:
-  db_data:
+      - "./db:/docker-entrypoint-initdb.d" 
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - 8001:80
+    environment:
+      - PMA_HOST=db
+      - PMA_PORT=3306

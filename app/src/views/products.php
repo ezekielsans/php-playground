@@ -15,7 +15,7 @@ print_r($products);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Products</title>
-    <link rel="stylesheet" href="/css/products.css">
+    <link rel="stylesheet" href="../../css/products.css">
 </head>
 <body>
     <nav class="navbar">

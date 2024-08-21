@@ -22,7 +22,7 @@ $store->addProduct();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>New Product</title>
-    <link rel="stylesheet" href="/css/addNewProduct.css">
+    <link rel="stylesheet" href="../../css/addNewProduct.css">
 </head>
 <body>
 

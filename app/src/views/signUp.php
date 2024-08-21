@@ -8,12 +8,12 @@ $store->registerUser();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Signup page</title>
-    <link rel="stylesheet" href="/css/signUp.css">
+    <link rel="stylesheet" href="../../css/signUp.css">
 </head>
 <body>
 <header>
         <div class="logo">
-            <img src="/assets/e-commerce-logo.png" alt="Foodnautica E-Store">
+            <img src="../../assets/e-commerce-logo.png" alt="Foodnautica E-Store">
             <a href="login.php"><h1>Foodnautica E-Store</h1></a>
         </div>
         <div class="help-link">
