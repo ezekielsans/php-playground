@@ -85,7 +85,7 @@ CREATE TABLE `product_items` (
   `price` varchar(255) NOT NULL,
   `vendor` varchar(255) NOT NULL,
   `batch_number` varchar(255) NOT NULL,
-  `addded_at` date NOT NULL DEFAULT current_timestamp(),
+  `added_at` datetime NOT NULL DEFAULT current_timestamp(),
   `added_by` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -93,7 +93,7 @@ CREATE TABLE `product_items` (
 -- Dumping data for table `product_items`
 --
 
-INSERT INTO `product_items` (`ID`, `product_id`, `qty`, `price`, `vendor`, `batch_number`, `addded_at`, `added_by`) VALUES
+INSERT INTO `product_items` (`ID`, `product_id`, `qty`, `price`, `vendor`, `batch_number`, `added_at`, `added_by`) VALUES
 (1, 2, 20, '234.55', 'EPSON', '13ASDAQWE', '2024-08-17', 'admin admin'),
 (2, 2, 50, '1211.12', 'BROTHER', '1311QWEASD', '2024-08-17', 'admin admin'),
 (3, 1, 25, '88.23', 'SONY', 'QWEQ123332', '2024-08-17', 'admin admin');
