@@ -16,7 +16,7 @@ services:
         - MYSQL_DATABASE=mystore
     # this is how we persist a sql db even when container stops
     volumes:
-      - "./db:/docker-entrypoint-initdb.d" 
+      - "./database:/docker-entrypoint-initdb.d" 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     ports:
