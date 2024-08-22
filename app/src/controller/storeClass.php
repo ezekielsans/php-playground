@@ -4,17 +4,21 @@ require_once 'utilitiesClass.php';
 class MyStore extends Utilities
 {
 
-    private $server = "mysql:host=localhost;dbname=myStore";
-    private $user = "root";
-    private $pass = "";
+    private $server = "mysql:host=sql;dbname=mystore";
+    private $user = "admin";
+    private $pass = "password";
     private $options = array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC);
-
     protected $con;
+    
+    
 
+    
     public function openConnection()
     {
 
         try {
+            
+          
             $this->con = new PDO($this->server, $this->user, $this->pass, $this->options);
         } catch (PDOException $e) {
             echo "There was an error opening the connection: " . $e->getMessage();
