@@ -4,7 +4,7 @@ require_once 'utilitiesClass.php';
 class MyStore extends Utilities
 {
 
-    private $server = "mysql:host=sql;dbname=mystore";
+    private $server = "mysql:host=db;dbname=mystore";
     private $user = "admin";
     private $pass = "password";
     private $options = array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC);
@@ -97,6 +97,7 @@ class MyStore extends Utilities
             //declare variables to insert
             $email = $_POST['email'];
             $password = md5($_POST['password']);
+            $address = $_POST['address'];
             $firstName = $_POST['firstName'];
             $lastName = $_POST['lastName'];
             $mobileNo = $_POST['mobileNo'];
@@ -105,9 +106,9 @@ class MyStore extends Utilities
             if ($this->checkUserExist($email) == 0) {
 
                 $this->openConnection();
-                $statement = $this->con->prepare('INSERT INTO members(`email`,`password`,`first_name`,`last_name`,`mobile_no`,`access`)
-                                                  VALUES(?,?,?,?,?,?)');
-                $statement->execute([$email, $password, $firstName, $lastName, $mobileNo, $access]);
+                $statement = $this->con->prepare('INSERT INTO members(`email`,`password`,`first_name`,`last_name`,`mobile_no`,`address`,`access`)
+                                                  VALUES(?,?,?,?,?,?,?)');
+                $statement->execute([$email, $password, $firstName, $lastName, $mobileNo,$address, $access]);
 
             } else {
                 echo "<h1>User already exist</h1>";

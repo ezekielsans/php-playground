@@ -11,7 +11,7 @@ services:
     volumes:
       - "./db:/docker-entrypoint-initdb.d" 
   www:
-    image: php:apache
+    build: .
       # to sync whatever is in your local to your docker image
     volumes:
       - "./app:/var/www/html"

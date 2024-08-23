@@ -36,7 +36,7 @@ CREATE TABLE `members` (
   `mobile_no` varchar(255) NOT NULL,
   `address` varchar(255) NOT NULL,
   `access` varchar(255) NOT NULL,
-  `addded_by` datetime NOT NULL
+  `addded_by` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
